@@ -1,0 +1,47 @@
+﻿using Payments.Orders.Application.Models.Carts;
+using Payments.Orders.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Payments.Orders.Application.Mappers
+{
+    public static class CartsMapper
+    {
+        public static CartDto ToDto(this CartEntity entity)
+        {
+            return new CartDto
+            {
+                Id = entity.Id,
+                CartItems = entity.CartItems!.Select(item => new CartItemDto
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Price = item.Price,
+                    Quantity = item.Quantity
+                }).ToList()
+            };
+        }
+
+        public static CartEntity ToEntity(this CartDto dto)
+        {
+            return new CartEntity
+            {
+                CartItems = dto.CartItems.Select(cart => cart.ToEntity()).ToList()
+            };
+        }
+
+
+        public static CartItemEntity ToEntity(this CartItemDto dto)
+        {
+            return new CartItemEntity
+            {
+                Name = dto.Name,
+                Price = dto.Price,
+                Quantity = dto.Quantity
+            };
+        }
+    }
+}
