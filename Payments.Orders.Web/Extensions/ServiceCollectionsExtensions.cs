@@ -71,7 +71,7 @@ namespace Payments.Orders.Web.Extensions
         {
             builder.Services.AddScoped<ICartsService, CartsService>();
             builder.Services.AddScoped<IOrdersService, OrdersService>();
-
+            builder.Services.AddScoped<IMerchantsService, MerchantsService>();
 
             return builder;
         }
