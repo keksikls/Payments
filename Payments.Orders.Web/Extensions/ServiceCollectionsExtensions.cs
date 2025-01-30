@@ -13,6 +13,7 @@ using Payments.Orders.Domain.Entities;
 using Payments.Orders.Domain.Models;
 using Payments.Orders.Domain.Options;
 using System.Text;
+using Payments.Orders.Web.BackgroundServices;
 
 
 
@@ -72,12 +73,18 @@ namespace Payments.Orders.Web.Extensions
             builder.Services.AddScoped<ICartsService, CartsService>();
             builder.Services.AddScoped<IOrdersService, OrdersService>();
             builder.Services.AddScoped<IMerchantsService, MerchantsService>();
-
             return builder;
         }
 
         public static WebApplicationBuilder AddIntegrationServices(this WebApplicationBuilder builder)
         {
+            return builder;
+        }
+
+        public static WebApplicationBuilder AddBackgroundService(this WebApplicationBuilder builder) 
+        {
+            builder.Services.AddHostedService<CreateOrderConsumer>();
+
             return builder;
         }
 
@@ -137,7 +144,7 @@ namespace Payments.Orders.Web.Extensions
         public static WebApplicationBuilder AddOptions(this WebApplicationBuilder builder) 
         {
             builder.Services.Configure<AuthOptions>(builder.Configuration.GetSection("Authentication"));
-
+            builder.Services.Configure<RabbitMqOptions>(builder.Configuration.GetSection("RabbitMQ"));
             return builder;
         }
     }

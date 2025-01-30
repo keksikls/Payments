@@ -19,6 +19,7 @@ builder.AddSwagger();
 builder.AddData();
 builder.AddApplicationServices();
 builder.AddIntegrationServices();
+builder.AddBackgroundService();
 
 
 var app = builder.Build();
