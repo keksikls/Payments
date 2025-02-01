@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Payments.Orders.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Payments.Orders.Domain.Entities
     {
         public string? Name { get; set; }
         public long OrderNumber { get; set; }
-
+        public OrderStatusType Status { get; set; }
         public CustomerEntity? Customer { get; set; }
         public long? CustomerId { get; set; }
 
@@ -20,5 +21,7 @@ namespace Payments.Orders.Domain.Entities
         public MerchantEntity? Merchant { get; set; }
 
         public long? MerchantId { get; set; }
+
+
     }
 }

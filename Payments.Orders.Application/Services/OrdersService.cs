@@ -5,6 +5,7 @@ using Payments.Orders.Application.Models.Orders;
 using Payments.Orders.Domain;
 using Payments.Orders.Domain.Entities;
 using Payments.Orders.Domain.Exceptions;
+using Payments.Orders.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -85,9 +86,17 @@ namespace Payments.Orders.Application.Services
             return entity.Select(x => x.ToDto()).ToList();
         }
 
-        public Task Reject(long orderId)
+        public async Task Reject(long orderId)
         {
-            throw new NotImplementedException();
+            var order = await context.Orders.SingleAsync(x => x.Id == orderId);
+
+            if (order == null)
+            {
+                throw new EntityNotFoundException(message: $"Order entity with id {orderId} not found");
+            }
+
+            order.Status = OrderStatusType.Reject;
+            await context.SaveChangesAsync();
         }
     }
 }
