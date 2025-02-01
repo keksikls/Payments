@@ -15,5 +15,6 @@ namespace Payments.Orders.Domain.Entities
        
         public required string Phone { get; set; }
         public string WebSyte { get; set; }
+        public List<UserEntity> Users { get; set; }
     }
 }
